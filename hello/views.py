@@ -7,7 +7,7 @@ import pickle
 import pandas as pd
 
 # Create your views here.
-def index2(request):
+def index_default(request):
     # return HttpResponse('Hello from Python!')
     return render(request, "index.html")
 
@@ -59,12 +59,6 @@ def light_off(request):
     df.iloc[0]['activity'] = 0; df.to_csv(_df_path())
     return render(request, "index.html", {'df': _df2tuple()})
 
-def index(request):
-    # col0 = []; col1 = []; col2 = []
-    # df = _df()
-    # for i in range(df.shape[0]):
-    #     col0.append(str(df.index[i])); col1.append(df.iloc[i]['activity']); col2.append(df.iloc[i]['pred6h'])    
-    # df.iloc[0]['activity'] += 1; df.to_csv(filepath)
-    # return render(request, "index.html", {'df': (col0, col1, col2)})
-    # df2tuple = _df2tuple()
-    return render(request, "index.html", {'df': _df2tuple()})
+def index(request): return render(request, "index.html", {'df': _df2tuple()})
+
+def min(request): return render(request, "index_min.html", {'df': _df2tuple()})

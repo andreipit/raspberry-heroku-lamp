@@ -117,3 +117,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
 
 django_heroku.settings(locals())
+
+
+import os
+MAIN_APP = os.path.dirname(__file__) # /home/user01/skladmax/skladmax/
+# PARENT_DIR = os.path.abspath(os.path.join(MAIN_PROJECT, os.pardir))
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(MAIN_APP, 'media')
+MEDIA_DEFAULT_IMG = '/no_image.jpg'

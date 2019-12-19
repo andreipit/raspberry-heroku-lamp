@@ -19,6 +19,8 @@ urlpatterns = [
     path("min", hello.views.min, name="min"),
     path("light_on", hello.views.light_on, name="light_on"),
     path("light_off", hello.views.light_off, name="light_off"),
+    path("light_on_practice", hello.views.light_on_practice, name="light_on_practice"),
+    path("light_off_practice", hello.views.light_off_practice, name="light_off_practice"),
     path("db/", hello.views.db, name="db"),
     path("admin/", admin.site.urls),
 ]

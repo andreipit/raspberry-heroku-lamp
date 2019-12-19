@@ -4,6 +4,9 @@
 {% block content %}
 
 
+<a type="button" class="btn btn-lg btn-primary" href="{% url 'index'%}">Main page</a><br><br>
+<a type="button" class="btn btn-lg btn-primary" href="{% url 'light_on_practice'%}">light_on_practice</a><br><br>
+<a type="button" class="btn btn-lg btn-primary" href="{% url 'light_off_practice'%}">light_off_practice</a><br><br>
 
 <form action="{% url 'light_on'%}" method="get">
     <input type="submit" value="Light ON" class="btn btn-lg btn-success">
@@ -15,7 +18,8 @@
 
 
 Light must be: {{ df.1.0 }} <br>
-Light in real world: {{ df.1.0 }}<br>
+Light in real world: {{ df.2.0 }}<br>
+Last checked at: {{ df.0.0 }}<br>
 
 
 {% endblock %}

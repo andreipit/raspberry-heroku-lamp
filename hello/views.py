@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 from .models import Greeting
 from django.conf import settings
-import pickle
+import pickle, datetime
 import pandas as pd
 
 # Create your views here.
@@ -46,18 +46,46 @@ def _df2tuple():
     col0 = []; col1 = []; col2 = []
     df = _df()
     for i in range(df.shape[0]):
-        col0.append(str(df.index[i])); col1.append(df.iloc[i]['activity']); col2.append(df.iloc[i]['pred6h'])    
+        # col0.append(str(df.index[i])); col1.append(df.iloc[i]['light_theory']); col2.append(df.iloc[i]['light_practice'])    
+        col0.append(df.iloc[i]['last_check_date']); col1.append(df.iloc[i]['light_theory']); col2.append(df.iloc[i]['light_practice'])    
     return (col0, col1, col2)
 
 def light_on(request):
-    df = _df()
-    df.iloc[0]['activity'] = 1; df.to_csv(_df_path())
+    df = _df(); 
+    # df.iloc[0]['light_theory'] = 1; 
+    df['light_theory'].iat[0] = 1 # 1=row number, works even if index is dates
+
+    df.to_csv(_df_path())
     return render(request, "index.html", {'df': _df2tuple()})
 
 def light_off(request):
-    df = _df()
-    df.iloc[0]['activity'] = 0; df.to_csv(_df_path())
+    df = _df(); 
+    df['light_theory'].iat[0] = 0 # 1=row number, works even if index is dates
+
+    #df.iloc[0]['light_theory'] = 0; 
+
+
+    df.to_csv(_df_path())
     return render(request, "index.html", {'df': _df2tuple()})
+
+def light_on_practice(request):
+    df = _df(); 
+    df['light_practice'].iat[0] = 1
+    df['last_check_date'].iat[0] = datetime.datetime.now()
+    # df.iloc[0]['light_practice'] = 1; 
+    # df.iloc[0]['last_check_date'] = datetime.datetime.now(); 
+    df.to_csv(_df_path())
+    return render(request, "index.html", {'df': _df2tuple()})
+
+def light_off_practice(request):
+    df = _df(); 
+    df['light_practice'].iat[0] = 0
+    df['last_check_date'].iat[0] = datetime.datetime.now()
+    # df.iloc[0]['light_practice'] = 0; 
+    # df.iloc[0]['last_check_date'] = str(datetime.datetime.now()); 
+    df.to_csv(_df_path())
+    return render(request, "index.html", {'df': _df2tuple()})
+
 
 def index(request): return render(request, "index.html", {'df': _df2tuple()})
 

@@ -40,17 +40,31 @@ def db(request):
 #     context['values'] = [df['f0'][-1],df['f1'][-1],df['f2'][-1],df['f3'][-1],df['f4'][-1],df['f5'][-1]]
 #     return render(request, "index.html", context)
 
-
-def index(request):
+def _df_path(): return settings.MEDIA_ROOT + '/hello/df.csv'
+def _df(): return pd.read_csv(_df_path(), parse_dates=["date"], index_col="date")
+def _df2tuple(): 
     col0 = []; col1 = []; col2 = []
-    filepath = settings.MEDIA_ROOT + '/hello/df.csv'
-    df = pd.read_csv(filepath, parse_dates=["date"], index_col="date")
-
-
-
-
+    df = _df()
     for i in range(df.shape[0]):
         col0.append(str(df.index[i])); col1.append(df.iloc[i]['activity']); col2.append(df.iloc[i]['pred6h'])    
-    
-    df.iloc[0]['activity'] += 1; df.to_csv(filepath)
-    return render(request, "index.html", {'df': (col0, col1, col2)})
+    return (col0, col1, col2)
+
+def light_on(request):
+    df = _df()
+    df.iloc[0]['activity'] = 1; df.to_csv(_df_path())
+    return render(request, "index.html", {'df': _df2tuple()})
+
+def light_off(request):
+    df = _df()
+    df.iloc[0]['activity'] = 0; df.to_csv(_df_path())
+    return render(request, "index.html", {'df': _df2tuple()})
+
+def index(request):
+    # col0 = []; col1 = []; col2 = []
+    # df = _df()
+    # for i in range(df.shape[0]):
+    #     col0.append(str(df.index[i])); col1.append(df.iloc[i]['activity']); col2.append(df.iloc[i]['pred6h'])    
+    # df.iloc[0]['activity'] += 1; df.to_csv(filepath)
+    # return render(request, "index.html", {'df': (col0, col1, col2)})
+    # df2tuple = _df2tuple()
+    return render(request, "index.html", {'df': _df2tuple()})

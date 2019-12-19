@@ -3,10 +3,29 @@
 
 {% block content %}
 
+
+
+<form action="{% url 'light_on'%}" method="get">
+    {% csrf_token %}
+    <input type="submit" value="Включить свет" class="btn btn-lg btn-success">
+</form>
+
+<form action="{% url 'light_off'%}" method="get">
+    {% csrf_token %}
+    <input type="submit" value="Выключить свет" class="btn btn-lg btn-danger">
+</form>
+
+
+Свет должен быть: {{ df.1.0 }} <br>
+Свет на самом деле: {{ df.1.0 }}<br>
+
+
+{% endblock %}
+
+
+{{ df.0.0 }} {{ df.1.0 }} {{ df.2.0 }} <br>
+{{ df.0.1 }} {{ df.1.1 }} {{ df.2.1 }} <br>
 now light is ON<br><br>
 <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/python-getting-started">Turn light ON</a><br><br>
 <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/python-getting-started">Turn light OFF</a><br><br>
 
-{{ df.0.0 }} {{ df.1.0 }} {{ df.2.0 }} <br>
-{{ df.0.1 }} {{ df.1.1 }} {{ df.2.1 }} <br>
-{% endblock %}

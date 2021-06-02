@@ -2,4 +2,4 @@ django
 gunicorn
 django-heroku
 pandas
-urllib3==1.25.7
+urllib3==1.26.5
